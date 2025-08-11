@@ -4,7 +4,7 @@ workflows:
             - echo "this is a pre-clone script"
             - echo $my_input
         inputs:
-            name: # input ID
+            my_input: # input ID
                 description: Who is greeted?
                 default: Codemagic
         name: Wikipedia Workflow with Mac mini M2
