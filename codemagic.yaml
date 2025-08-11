@@ -1,5 +1,9 @@
 workflows:
   wikipedia-mac-mini-m2:
+    inputs:
+      name: # input ID
+        description: Who is greeted?
+        default: Codemagic
     name: Wikipedia Workflow with Mac mini M2
     environment:
       xcode: 16.0
