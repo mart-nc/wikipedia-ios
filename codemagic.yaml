@@ -1,23 +1,26 @@
 workflows:
-  wikipedia-mac-mini-m2:
-    inputs:
-      name: # input ID
-        description: Who is greeted?
-        default: Codemagic
-    name: Wikipedia Workflow with Mac mini M2
-    environment:
-      xcode: 16.0
-      vars:
-        XCODE_PROJECT: "Wikipedia.xcodeproj"
-        XCODE_SCHEME: "Wikipedia"
-    scripts:
-      - name: Upgrade brew
-        script: brew install clang-format swiftlint || brew upgrade clang-format swiftlint
-      - name: Installing scripts
-        script: ./scripts/setup
-      - name: Build
-        script: |
-          xcodebuild clean build -project $XCODE_PROJECT -scheme $XCODE_SCHEME -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 15,OS=18.0' -configuration Debug CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
-      - sleep 60
-    artifacts:
-      - /Users/builder/Library/Developer/Xcode/DerivedData/**/*.app
+    wikipedia-mac-mini-m2:
+        pre_clone_scripts:
+            - echo "this is a pre-clone script"
+            - echo $my_input
+        inputs:
+            name: # input ID
+                description: Who is greeted?
+                default: Codemagic
+        name: Wikipedia Workflow with Mac mini M2
+        environment:
+            xcode: 16.0
+            vars:
+                XCODE_PROJECT: "Wikipedia.xcodeproj"
+                XCODE_SCHEME: "Wikipedia"
+        scripts:
+            - name: Upgrade brew
+              script: brew install clang-format swiftlint || brew upgrade clang-format swiftlint
+            - name: Installing scripts
+              script: ./scripts/setup
+            - name: Build
+              script: |
+                  xcodebuild clean build -project $XCODE_PROJECT -scheme $XCODE_SCHEME -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 15,OS=18.0' -configuration Debug CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
+            - sleep 60
+        artifacts:
+            - /Users/builder/Library/Developer/Xcode/DerivedData/**/*.app
